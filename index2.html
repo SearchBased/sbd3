@@ -101,7 +101,7 @@
 			}
 
 			function draw() {
-
+        inDraw = true;
 				var groups = svg.selectAll("g")
 							.data(barArray)
 							.enter()
@@ -129,14 +129,22 @@
 							.attr("height", function(d) {
 								return yScale(d.y);
 							})
-							.attr("width", xScaleStacked.rangeBand())
+							.attr("width", xScaleStacked.rangeBand()).each("end", function() { inDraw = false; })
 
 			}
 
-			d3.select("p") 
+			d3.select("p")
+
 				.on("click", function() {
+          if(inDraw) return
+
+          if(d3.select(this).attr('class') == 'INCLICK') {
+            return
+          }
+          d3.select(this).attr('class','INCLICK')
 					console.log("clicked.");
 
+          var _this = this
 					var groups = svg.selectAll("g");
 
 					groups.selectAll("rect")
@@ -157,7 +165,7 @@
 						.duration(500)
 							.attr("transform", function(d, i) {
 								return "translate(" + (i * xScaleGrouped.rangeBand()) + ")";
-							});
+							}).each('end', function() { d3.select(_this).attr('class', '') })
 
 
 				});
