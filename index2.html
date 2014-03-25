@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Simple Stack</title>
+        <script src="bower_components/d3/d3.min.js"></script>     
+        <script src="bower_components/underscore/underscore.js"></script>     
+        <style>
+            svg {
+                border: solid 1px #ccc;
+                font: 10px sans-serif;
+                shape-rendering: crispEdges;
+            }
+        </style>             
+    </head>
+    <body>
+ 
+        <div id="total-visits-chart"></div>
+
+
+        <p>Click me!</p>
+ 
+        <script type="text/javascript">
+			// Parameters
+        	var w = 1200;
+        	var h = 400;
+        	var colors = d3.scale.category20();
+
+        	var authorIDs = [];
+        	var barArray = [];
+
+        	var gData;
+        	var svg;
+	        var xScaleStacked;
+			var xScaleGrouped;
+			var yScale;
+
+        	initialize();
+
+            var json = d3.json("sample.json", function(data) {
+            	gData = data;
+	            data.forEach(function(timebucket) {
+	            	timebucket.data.forEach(function(authorData) {
+	            		if(!_.contains(authorIDs, authorData.author)) {
+	            			authorIDs.push(authorData.author);
+	            		}
+	            	});
+	            });
+
+	            authorIDs.forEach(function(authorID) {
+	            	var dataPointsOfAuthor = [];
+	            	data.forEach(function(timebucket) {
+	            		var authorData = _.findWhere(timebucket.data, {"author": authorID});
+
+	            		var dataPoint = {};
+	            		dataPoint.x = timebucket.time;
+						dataPoint.y = authorData? parseInt(authorData.totalVisits) : 0;
+
+	            		dataPointsOfAuthor.push(dataPoint);
+	            	});
+	            	barArray.push(dataPointsOfAuthor);
+	            });
+
+
+
+	            console.dir(barArray);
+
+	            var stack = d3.layout.stack();
+	            stack(barArray);
+
+	            console.dir(barArray);
+
+	            update();
+	            draw();
+            });
+
+			function update() {
+		        xScaleStacked = d3.scale.ordinal()
+					.domain(d3.range(authorIDs.length))
+					.rangeRoundBands([0, w], 0.05);
+
+				xScaleGrouped = d3.scale.ordinal()
+					.domain(d3.range(authorIDs.length * gData.length))
+					.rangeRoundBands([0, w], 0.05);
+
+				yScale = d3.scale.linear()
+							.domain([0,				
+								d3.max(barArray, function(d) {
+									return d3.max(d, function(d) {
+										return d.y0 + d.y;
+									});
+								})
+							])
+							.range([0, h]);
+			}
+
+
+			function initialize() {
+				svg = d3.select('body').append('svg')
+	            	.attr('width', w)
+	            	.attr('height', h);
+			}
+
+			function draw() {
+
+				var groups = svg.selectAll("g")
+							.data(barArray)
+							.enter()
+								.append("g")
+								.style("fill", function(d, i) {
+									return colors(i);
+								});
+
+
+				// Add a rect for each data value
+				var rects = groups.selectAll("rect")
+					.data(function(d) { console.log(d); return d; })
+					.enter()
+						.append("rect")
+						.attr("height", 0)
+						.attr("y", h)
+						.transition()
+						.duration(1000)
+							.attr("x", function(d, i) {
+								return xScaleStacked(i);
+							})
+							.attr("y", function(d) {
+								return (h - yScale(d.y0)) - yScale(d.y); // F yeah
+							})
+							.attr("height", function(d) {
+								return yScale(d.y);
+							})
+							.attr("width", xScaleStacked.rangeBand())
+
+			}
+
+			d3.select("p") 
+				.on("click", function() {
+					console.log("clicked.");
+
+					var groups = svg.selectAll("g");
+
+					groups.selectAll("rect")
+						.transition()
+						.duration(1000)
+							.attr("x", function(d, i) {
+								return xScaleStacked(i);
+							})
+							.attr("y", function(d, i) {
+								return h - yScale(d.y);
+							})
+							.attr("width", xScaleGrouped.rangeBand())
+					
+					svg.selectAll("g")
+						.transition()
+						.duration(1000)
+							.attr("transform", function(d, i) {
+								return "translate(" + (i * xScaleGrouped.rangeBand()) + ")";
+							});
+
+
+				});
+
+
+
+        </script>
+    </body>
+</html>
