@@ -141,18 +141,20 @@
 
 					groups.selectAll("rect")
 						.transition()
-						.duration(1000)
+						.duration(500)
 							.attr("x", function(d, i) {
 								return xScaleStacked(i);
 							})
-							.attr("y", function(d, i) {
-								return h - yScale(d.y);
-							})
 							.attr("width", xScaleGrouped.rangeBand())
-					
+							.transition()
+							.duration(500)
+								.attr("y", function(d, i) {
+									return h - yScale(d.y);
+								})
+
 					svg.selectAll("g")
 						.transition()
-						.duration(1000)
+						.duration(500)
 							.attr("transform", function(d, i) {
 								return "translate(" + (i * xScaleGrouped.rangeBand()) + ")";
 							});
