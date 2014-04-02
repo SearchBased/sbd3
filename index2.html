@@ -108,7 +108,7 @@
 								.append("g")
 								.style("fill", function(d, i) {
 									return colors(i);
-								});
+							});
 
 
 				// Add a rect for each data value
@@ -129,8 +129,8 @@
 							.attr("height", function(d) {
 								return yScale(d.y);
 							})
-							.attr("width", xScaleStacked.rangeBand())
-
+							.attr("width", xScaleStacked.rangeBand());
+							
 			}
 
 			d3.select("p") 

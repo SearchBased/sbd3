@@ -19,11 +19,11 @@ function toArray(data){
 	_.each(data, function(value, key){
 		var chartValues = [];
 		_.each(value, function(value2, key2){
-			var chartValue = [];
-			chartValue.push(key2);
-			chartValue.push(value2);
+			var chartValue = {};
+			chartValue.x = key2;
+			chartValue.y = value2;
 			chartValues.push(chartValue);
-			console.log(key2);
+			
 		});
 	theArray.push(chartValues);
 	});

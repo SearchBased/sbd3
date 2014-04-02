@@ -51,10 +51,19 @@
 			}
 		};
 		
-		console.log(data);
-		console.log(invertMatrix(data));
-		console.log(toArray(invertMatrix(data)));
+		
+		var barChartMultiple = new BarChartMultiple("#barChart", 800, 400);
+		barChartMultiple.init();
+		barChartMultiple.update(toArray(invertMatrix(data)));
+		barChartMultiple.draw(false);
+		setTimeout(function() {
+			console.log("drawGrouped");
+			barChartMultiple.toggle();
+		}, 2000);
 
+	
+
+		
 
 		</script>
 	</div>
