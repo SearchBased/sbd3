@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	 <script src="/bower_components/d3/d3.min.js"></script>     
+     <script src="/bower_components/underscore/underscore.js"></script> 
+     <script src="/src/dataParser.js"></script>
+     <script src="/src/barChartMultiple.js"></script>
+     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+     <style type="text/css">
+     	  svg {
+                border: solid 1px #ccc;
+                font: 10px sans-serif;
+                shape-rendering: crispEdges;
+            }
+     </style>
+</head>
+<body>
+	<div class="row">
+	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+		<div class="panel panel-default">
+		  <div class="panel-heading">Data</div>
+			<div class="panel-body">
+			   <textarea class="form-control" rows="20"></textarea>
+			</div>
+		</div>
+			
+	</div>
+	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+		<div class="panel panel-default">
+		  <div class="panel-heading">Graph</div>
+			<div class="panel-body" id="barChart">
+			  
+			</div>
+		</div>
+			
+	</div>
+		<script type="text/javascript">
+		var data = {
+			"00.10":{
+				"cyberdog3000": 30,
+				"cybergoat3000": 10
+			},
+			"00:20":{
+				"cyberdog3000": 40,
+				"cybergoat3000": 20
+			},
+			"00:30":{
+				"cyberdog3000": 50,
+				"cybergoat3000": 30
+			}
+		};
+		
+		console.log(data);
+		console.log(invertMatrix(data));
+		console.log(toArray(invertMatrix(data)));
+
+
+		</script>
+	</div>
+	
+</body>
+</html>

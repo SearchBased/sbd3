@@ -1,0 +1,21 @@
+{
+  "name": "sbd3",
+  "version": "0.0.1",
+  "homepage": "https://github.com/SearchBased/sbd3",
+  "authors": [
+    "Bastiaan Niamut <bastiaan.niamut@searchbased.nl>"
+  ],
+  "description": "A library for charts in d3. Used by SeachBased.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3": null,
+    "underscore": null
+  }
+}

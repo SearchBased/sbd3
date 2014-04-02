@@ -1,46 +1,72 @@
 [
 	{
-		"time": "2014-03-23T05:10:00",
-		"data": [
+		"bucket": "2014-03-23T05:10:00",
+		"aggregations": [
 			{
-				"author": "5",
-				"totalVisits": "55"
-			},
-			{
-				"author": "3",
-				"totalVisits": "32"
-			}
-		]
+				"id": "5",
+				"data": {
+					"totalVisits": "55"
+				}
 
-	},
-	{
-		"time": "2014-03-23T05:20:00",
-		"data": [
-			{
-				"author": "5",
-				"totalVisits": "75"
 			},
 			{
-				"author": "3",
-				"totalVisits": "86"
-			}
-		]
-	},
-	{
-		"time": "2014-03-23T05:30:00",
-		"data": [
-			{
-				"author": "5",
-				"totalVisits": "12"
-			},
-			{
-				"author": "1",
-				"totalVisits": "152"
-			},
-			{
-				"author": "3",
-				"totalVisits": "15"
+				"id": "3",
+				"data": {
+					"totalVisits": "32"
+
+				}
+
 			}
 		]
 	}
+
 ]
+
+
+
+
+
+// 		"data":[
+// 			{
+// 				"author": "5",
+// 				"totalVisits": "55",
+// 				"uniqueVisits": "32"
+// 			},
+// 			{
+// 				"author": "3",
+// 				"totalVisits": "32"
+// 			}
+// 		]
+
+// 	},
+// 	{
+// 		"time": "2014-03-23T05:20:00",
+// 		"data": [
+// 			{
+// 				"author": "5",
+// 				"totalVisits": "75"
+// 			},
+// 			{
+// 				"author": "3",
+// 				"totalVisits": "86"
+// 			}
+// 		]
+// 	},
+// 	{
+// 		"time": "2014-03-23T05:30:00",
+// 		"data": [
+// 			{
+// 				"author": "5",
+// 				"totalVisits": "12"
+// 			},
+// 			{
+// 				"author": "1",
+// 				"totalVisits": "152"
+// 			},
+// 			{
+// 				"author": "3",
+// 				"totalVisits": "15"
+// 			}
+// 		]
+// 	}
+// ]
