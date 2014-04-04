@@ -12,10 +12,49 @@ function BarChartMultiple(element, width, height){
 
 	this.dataSet = [];
 
-	this.stacked = null;
+	this.firstTime = true;
 
 
 	var colors = d3.scale.category20();
+
+
+	//private function
+	attribute = {};
+	attribute.setX = function(self, element){
+		element.attr("x", function(d, i) {
+								return self.xScaleStacked(i);
+							});
+	};
+	attribute.setY = function(self, element, isStacked){
+		return element.attr("y", function(d) {
+			if(isStacked){	
+				return (self.height - self.yScale(d.y0)) - self.yScale(d.y);
+			} else {		
+				return self.height - self.yScale(d.y); 
+			}
+		});
+	};
+	attribute.setWidth = function(self, element, isStacked){
+		if(isStacked){
+			return element.attr("width", self.xScaleStacked.rangeBand());
+		} else {
+			return element.attr("width", self.xScaleGrouped.rangeBand());
+		}	
+	};
+	attribute.setHeight = function(self, element){
+		element.attr("height", function(d) {
+								return self.yScale(d.y);
+							});
+	};
+	attribute.setTransform = function(self, element, isStacked){
+	return element.attr("transform", function(d, i) {
+			if(isStacked){
+				return "translate(0, 0)";
+			} else {
+				return "translate(" + (i * self.xScaleGrouped.rangeBand()) + ", 0)";
+			}
+		});
+	};
 
 	this.init = function(){
 		svg = d3.select(element).append('svg')
@@ -44,12 +83,15 @@ function BarChartMultiple(element, width, height){
 									});
 								})
 							])
-							.range([0, this.height]);
-
-		
+							.range([0, this.height]);		
 	};
 
+
+
+
+
 	this.draw = function(isStacked){
+		
 		var self = this;
 			//Here are the groups per dataset;
 			var groups = svg.selectAll("g")
@@ -59,6 +101,7 @@ function BarChartMultiple(element, width, height){
 									.style("fill", function(d, i) {
 									return colors(i);
 							});
+
 			var rects = groups.selectAll("rect")
 					.data(function(d) { console.log(d); return d; })
 					.enter()
@@ -68,79 +111,35 @@ function BarChartMultiple(element, width, height){
 						.transition()
 						.duration(1000);
 			
-			rects.attr("x", function(d, i) {
-								return self.xScaleStacked(i);
-							}).attr("height", function(d) {
-								return self.yScale(d.y);
-							});
+			attribute.setX(self, rects);
+			attribute.setHeight(self,rects);
+			
 		
-		var groupElements;
-		var rectElements;
+	
 		
-		if(this.stacked === null){
-			groupElements = groups;
-			rectElements = rects;
+		if(self.firstTime){
+			attribute.setTransform(self, groups, isStacked);
+			attribute.setY(self, rects, isStacked);
+			attribute.setWidth(self, rects, isStacked);
+			
+			self.firstTime = false;
+			
 		} else {
-			groupElements = groups.transition().duration(500);
-			rectElements = groups.transition().duration(500);
+			var groupsAnim = svg.selectAll("g").transition().duration(500);		
+			var rectsAnim = groupsAnim.selectAll("rect")
+										.transition()
+											.duration(500);
+			
+			attribute.setWidth(self, rectsAnim, isStacked);
+			attribute.setY(self, rectsAnim, isStacked).transition().duration(500);
+			attribute.setTransform(self, groupsAnim, isStacked);
+			
 		}
+
+	};
+
+}
 		
-		if(isStacked === true){
-			theElement.attr("y", function(d) {
-					return (self.height - self.yScale(d.y0)) - self.yScale(d.y); // F yeah
-			})
-			.attr("width", self.xScaleStacked.rangeBand());			
-		}
-
-		if(isStacked === false){
-			groups.attr("transform", function(d, i) {
-				return "translate(" + (i * self.xScaleGrouped.rangeBand()) + ")";
-			});
-
-			theElement.attr("y", function(d) {
-				return self.height - self.yScale(d.y); // F yeah
-			})
-			.attr("width", self.xScaleGrouped.rangeBand());
-		}
-
-	};
-
-	this.toggle = function(){
-		var self = this;
-
-		var groups = svg.selectAll("g");
-							// .data(this.dataSet)
-							// .enter()
-							// 	.append("g")
-							// 	.style("fill", function(d, i) {
-							// 		return colors(i);
-							// });
-
-					groups.selectAll("rect")
-						.transition()
-						.duration(500)
-							.attr("x", function(d, i) {
-								return self.xScaleStacked(i);
-							})
-							.attr("width", self.xScaleGrouped.rangeBand())
-							.attr("height", function(d) {
-								return self.yScale(d.y);
-							})
-							.transition()
-							.duration(500)
-								.attr("y", function(d, i) {
-									return self.height - self.yScale(d.y);
-								});
-
-					svg.selectAll("g")
-						.transition()
-						.duration(500)
-							.attr("transform", function(d, i) {
-								return "translate(" + (i * self.xScaleGrouped.rangeBand()) + ")";
-							});
-	};
-		}
-		}
 
 
 

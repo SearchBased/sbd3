@@ -55,11 +55,16 @@
 		var barChartMultiple = new BarChartMultiple("#barChart", 800, 400);
 		barChartMultiple.init();
 		barChartMultiple.update(toArray(invertMatrix(data)));
-		barChartMultiple.draw(false);
+		barChartMultiple.draw(true);
 		setTimeout(function() {
-			console.log("drawGrouped");
-			barChartMultiple.toggle();
+			console.log("toggle");
+			barChartMultiple.draw(false);
 		}, 2000);
+
+			setTimeout(function() {
+			console.log("toggle");
+			barChartMultiple.draw(true);
+		}, 4000);
 
 	
 
