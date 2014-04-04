@@ -21,7 +21,7 @@ function BarChartMultiple(element, width, height){
 	//private function
 	attribute = {};
 	attribute.setX = function(self, element){
-		element.attr("x", function(d, i) {
+		return element.attr("x", function(d, i) {
 								return self.xScaleStacked(i);
 							});
 	};
@@ -42,7 +42,7 @@ function BarChartMultiple(element, width, height){
 		}	
 	};
 	attribute.setHeight = function(self, element){
-		element.attr("height", function(d) {
+		return element.attr("height", function(d) {
 								return self.yScale(d.y);
 							});
 	};
@@ -125,14 +125,15 @@ function BarChartMultiple(element, width, height){
 			self.firstTime = false;
 			
 		} else {
-			var groupsAnim = svg.selectAll("g").transition().duration(500);		
-			var rectsAnim = groupsAnim.selectAll("rect")
-										.transition()
-											.duration(500);
-			
+			var rectsAnim = svg.selectAll("rect").transition().duration(500);
 			attribute.setWidth(self, rectsAnim, isStacked);
-			attribute.setY(self, rectsAnim, isStacked).transition().duration(500);
+			 
+			var groupsAnim = svg.selectAll("g").transition().duration(500);		
 			attribute.setTransform(self, groupsAnim, isStacked);
+			
+			rectsAnim = svg.selectAll("rect").transition().duration(500).delay(500);
+			attribute.setY(self, rectsAnim, isStacked);
+			
 			
 		}
 
