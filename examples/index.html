@@ -8,11 +8,26 @@
      <script src="/src/barChartMultiple.js"></script>
      <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
      <style type="text/css">
-     	  svg {
-                border: solid 1px #ccc;
-                font: 10px sans-serif;
-                shape-rendering: crispEdges;
-            }
+
+         #barChart{
+         	background-color: #fcfcfc;
+         }
+
+         .bar {
+         	opacity: 0.9;
+         }
+
+         .container{
+         	fill: white;
+         	stroke: #555555;
+         	stroke-width: 1;
+
+         }
+
+         .gridLine {
+         	stroke: #999999;
+         	stroke-width: 1;
+         }
      </style>
 </head>
 <body>
@@ -26,7 +41,7 @@
 		</div>
 			
 	</div>
-	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" >
 		<div class="panel panel-default">
 		  <div class="panel-heading">Graph</div>
 			<div class="panel-body" id="barChart">
@@ -42,13 +57,99 @@
 				"cybergoat3000": 10
 			},
 			"00:20":{
-				"cyberdog3000": 40,
-				"cybergoat3000": 20
+				"cyberdog3000": 20,
+				"cybergoat3000": 30
 			},
 			"00:30":{
 				"cyberdog3000": 50,
+				"cybergoat3000": 130.432
+			},
+			"00:40":{
+				"cyberdog3000": 23,
+				"cybergoat3000": 54,
+			},
+			"00:50":{
+				"cyberdog3000": 49,
+				"cybergoat3000": 11
+			},
+			"01:00":{
+				"cyberdog3000": 12,
+				"cybergoat3000": 24
+			},
+			"01.10":{
+				"cyberdog3000": 30,
+				"cybergoat3000": 10
+			},
+			"01:20":{
+				"cyberdog3000": 20,
 				"cybergoat3000": 30
+			},
+			"01:30":{
+				"cyberdog3000": 50,
+				"cybergoat3000": 45
+			},
+			"01:40":{
+				"cyberdog3000": 23,
+				"cybergoat3000": 54,
+			},
+			"01:50":{
+				"cyberdog3000": 49,
+				"cybergoat3000": 11
+			},
+			"02:00":{
+				"cyberdog3000": 12,
+				"cybergoat3000": 24
+			},
+			"02.10":{
+				"cyberdog3000": 30,
+				"cybergoat3000": 10
+			},
+			"02:20":{
+				"cyberdog3000": 20,
+				"cybergoat3000": 30
+			},
+			"02:30":{
+				"cyberdog3000": 50,
+				"cybergoat3000": 45
+			},
+			"02:40":{
+				"cyberdog3000": 23,
+				"cybergoat3000": 54,
+			},
+			"02:50":{
+				"cyberdog3000": 49,
+				"cybergoat3000": 11
+			},
+			"03:00":{
+				"cyberdog3000": 12,
+				"cybergoat3000": 24
+			},
+			"03.10":{
+				"cyberdog3000": 30,
+				"cybergoat3000": 10
+			},
+			"03:20":{
+				"cyberdog3000": 20,
+				"cybergoat3000": 30
+			},
+			"03:30":{
+				"cyberdog3000": 50,
+				"cybergoat3000": 45
+			},
+			"03:40":{
+				"cyberdog3000": 23,
+				"cybergoat3000": 54,
+			},
+			"03:50":{
+				"cyberdog3000": 49,
+				"cybergoat3000": 11
+			},
+			"04:00":{
+				"cyberdog3000": 12,
+				"cybergoat3000": 24
 			}
+			
+			
 		};
 		
 		
@@ -61,10 +162,12 @@
 			barChartMultiple.draw(false);
 		}, 2000);
 
-			setTimeout(function() {
+		setTimeout(function() {
 			console.log("toggle");
 			barChartMultiple.draw(true);
 		}, 4000);
+		
+
 
 	
 
